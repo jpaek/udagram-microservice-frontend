@@ -3,12 +3,12 @@ import { HttpClient, HttpHeaders, HttpRequest, HttpEvent } from '@angular/common
 import { environment } from '../../environments/environment';
 import { map } from 'rxjs/operators';
 
-const API_HOST = environment.apiHost;
+const API_HOST = environment.userApiHost;
 
 @Injectable({
   providedIn: 'root'
 })
-export class ApiService {
+export class UserApiService {
   httpOptions = {
     headers: new HttpHeaders({'Content-Type': 'application/json'})
   };
@@ -34,12 +34,12 @@ export class ApiService {
 
   get(endpoint): Promise<any> {
     const url = `${API_HOST}${endpoint}`;
-    const req = this.http.get(url, this.httpOptions).pipe(map(ApiService.extractData));
+    const req = this.http.get(url, this.httpOptions).pipe(map(UserApiService.extractData));
 
     return req
             .toPromise()
             .catch((e) => {
-              ApiService.handleError(e);
+              UserApiService.handleError(e);
               throw e;
             });
   }
@@ -49,7 +49,7 @@ export class ApiService {
     return this.http.post<HttpEvent<any>>(url, data, this.httpOptions)
             .toPromise()
             .catch((e) => {
-              ApiService.handleError(e);
+              UserApiService.handleError(e);
               throw e;
             });
   }
